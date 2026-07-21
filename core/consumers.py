@@ -1,11 +1,12 @@
 import json
-from core.models import Notification
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        print("connected")
-        await self.accept()
+        user=self.scope["user"]
+        if user.is_authenticated():
+            print("connected")
+            await self.accept()     
 
     async def receive(self, text_data):
         data=json.loads(text_data)
